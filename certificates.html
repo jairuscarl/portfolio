@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0a0a0f" />
+  <meta name="description" content="Certificates — Jairus Carl F. Esteban" />
+  <title>Certificates — Jairus Carl F. Esteban</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-theme="dark">
+
+  <div class="bg" aria-hidden="true"></div>
+  <div class="bg-overlay" aria-hidden="true"></div>
+
+  <header class="topbar" id="top">
+    <nav class="nav shell" aria-label="Primary">
+      <a class="brand" href="index.html">
+        <span class="brand-dot"></span>
+        <span class="brand-text"><span><</span> JAI <span>/></span></span>
+      </a>
+      <div class="nav-right">
+        <input class="nav-checkbox" type="checkbox" id="nav-toggle-cb">
+        <div class="nav-links">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="about.html">About</a>
+          <a class="nav-link" href="projects.html">Projects</a>
+          <a class="nav-link" href="demoreel.html">Demo Reel</a>
+          <a class="nav-link is-active" href="certificates.html">Certificates</a>
+          <a class="nav-link" href="contact.html">Contact</a>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+        <label class="nav-toggle" for="nav-toggle-cb" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="section page shell">
+      <div class="page-head">
+        <h1 class="page-title">Certificates</h1>
+        <p class="page-desc">Professional certifications and achievements that validate my skills and dedication.</p>
+      </div>
+
+      <div class="cert-grid">
+        <article class="card reveal">
+          <div class="card-media">
+            <img src="images/certificates/NC2.jpg" alt="Certificate: TESDA NC2" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">TESDA NC II</h3>
+            <p class="card-text">National Certificate in Information and Communications Technology</p>
+            <button class="btn btn-primary btn-block cert-view" data-src="images/certificates/NC2.jpg" data-title="TESDA NC II Certification">View</button>
+          </div>
+        </article>
+
+        <article class="card reveal reveal-delay-1">
+          <div class="card-media">
+            <img src="images/certificates/Evotech-cert.jpg" alt="Certificate: Evotech" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Evotech</h3>
+            <p class="card-text">Work immersion completion certificate on Web Development</p>
+            <button class="btn btn-primary btn-block cert-view" data-src="images/certificates/Evotech-cert.jpg" data-title="Evotech Work Immersion">View</button>
+          </div>
+        </article>
+
+        <article class="card reveal reveal-delay-2">
+          <div class="card-media">
+            <img src="images/certificates/NROTC-cert.jpg" alt="Certificate: NROTC" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">NROTC</h3>
+            <p class="card-text">Naval Reserve Officers' Training Corps certification</p>
+            <button class="btn btn-primary btn-block cert-view" data-src="images/certificates/NROTC-cert.jpg" data-title="NROTC Certification">View</button>
+          </div>
+        </article>
+
+        <article class="card reveal reveal-delay-3">
+          <div class="card-media">
+            <img src="images/certificates/simplilearn-cert.jpeg" alt="Certificate: Simplilearn SQL Basics" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Simplilearn SQL Basics</h3>
+            <p class="card-text">SQL fundamentals and database querying certification</p>
+            <button class="btn btn-primary btn-block cert-view" data-src="images/certificates/simplilearn-cert.jpeg" data-title="Simplilearn SQL Basics">View</button>
+          </div>
+        </article>
+
+        <article class="card reveal reveal-delay-4">
+          <div class="card-media">
+            <img src="images/certificates/pythoncert.jpg" alt="Certificate: CodeSignal python" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">CodeSignal Data Analysis python</h3>
+            <p class="card-text">Data analysis skills and Python programming certification</p>
+            <button class="btn btn-primary btn-block cert-view" data-src="images/certificates/pythoncert.jpg" data-title="CodeSignal Data Analysis python">View</button>
+          </div>
+        </article>
+
+        <article class="card reveal reveal-delay-4">
+          <div class="card-media">
+            <img src="images/certificates/CAT-cert.jpg" alt="Certificate: CAT" loading="lazy" />
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">CAT</h3>
+            <p class="card-text">Citizens Advancement Training certification</p>
+            <button class="btn btn-primary btn-block cert-view" data-src="images/certificates/CAT-cert.jpg" data-title="Citizens Advancement Training Certificate">View</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="certModal" role="dialog" aria-modal="true" aria-label="Certificate preview">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="modalTitle">Certificate</span>
+        <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="Certificate" />
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer shell">
+    <div class="footer-inner">
+      <span>&copy; 2026 Jairus Carl F. Esteban. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
