@@ -1,0 +1,17 @@
+# Clean URLs: send /Portfolio/about, /Portfolio/projects, … to index.php,
+# which serves the React app. React Router then shows the right page.
+RewriteEngine On
+RewriteBase /Portfolio/
+
+# Real files and folders (dist/assets, images, …) are served as-is.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^ index.php [L]
+
+# Development files don't need to be reachable from the browser.
+RedirectMatch 404 ^/Portfolio/(src|node_modules)(/|$)
+<FilesMatch "^(package(-lock)?\.json|vite\.config\.js|eslint\.config\.js|\.env.*|README\.md)$">
+    Require all denied
+</FilesMatch>
