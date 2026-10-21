@@ -45,7 +45,7 @@ export default function Certificates({ onOpenImage }) {
               key={cert.title}
               delay={(i % 3) * 100}
               layout
-              exit={{ opacity: 0, scale: 0.8, filter: 'blur(8px)', transition: { duration: 0.25 } }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.25 } }}
             >
               <article className="card glass">
                 <button

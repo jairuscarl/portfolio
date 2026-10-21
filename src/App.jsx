@@ -2,10 +2,9 @@ import { useCallback, useEffect, useState } from 'react'
 import { AnimatePresence, MotionConfig, motion } from 'motion/react'
 import { BrowserRouter, Link, Route, Routes, useLocation, useOutlet } from 'react-router'
 import { navLinks, profile } from './data'
-import { useRefraction, useTheme } from './hooks'
+import { useTheme } from './hooks'
 import { spring } from './motion'
 import Backdrop from './components/Backdrop'
-import GlassFilter from './components/GlassFilter'
 import Lightbox from './components/Lightbox'
 import Navbar from './components/Navbar'
 import About from './pages/About'
@@ -18,11 +17,11 @@ import Projects from './pages/Projects'
 // Clean URLs live under /Portfolio on XAMPP (set in .env.production) and at / in `npm run dev`.
 const basename = import.meta.env.VITE_BASENAME || '/'
 
-// Pages sink back and blur out, then the next one rises into focus.
+// Pages sink back and fade out, then the next one rises into focus.
 const pageMotion = {
-  initial: { opacity: 0, y: 24, scale: 0.985, filter: 'blur(12px)' },
-  animate: { opacity: 1, y: 0, scale: 1, filter: 'none', transition: spring.smooth },
-  exit: { opacity: 0, scale: 0.97, filter: 'blur(8px)', transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } },
+  initial: { opacity: 0, y: 24, scale: 0.985 },
+  animate: { opacity: 1, y: 0, scale: 1, transition: spring.smooth },
+  exit: { opacity: 0, scale: 0.97, transition: { duration: 0.2, ease: [0.4, 0, 1, 1] } },
 }
 
 function Layout({ theme, onToggleTheme }) {
@@ -58,7 +57,6 @@ function Layout({ theme, onToggleTheme }) {
 export default function App() {
   const [theme, toggleTheme] = useTheme()
   const [viewer, setViewer] = useState(null) // { items, index } while the lightbox is open
-  useRefraction()
 
   const openImage = useCallback((items, index) => setViewer({ items, index }), [])
   const closeImage = useCallback(() => setViewer(null), [])
@@ -66,7 +64,6 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <GlassFilter />
       <BrowserRouter basename={basename}>
         <Routes>
           <Route element={<Layout theme={theme} onToggleTheme={toggleTheme} />}>

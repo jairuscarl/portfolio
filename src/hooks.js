@@ -20,15 +20,6 @@ export function useTheme() {
   return [theme, toggle]
 }
 
-// Turns on backdrop refraction for .liquid controls. Only Chromium can filter a backdrop through SVG;
-// elsewhere the declaration would blank the glass, so it stays off.
-export function useRefraction() {
-  useEffect(() => {
-    const isChromium = navigator.userAgentData?.brands?.some((b) => b.brand === 'Chromium')
-    document.documentElement.classList.toggle('has-refraction', Boolean(isChromium))
-  }, [])
-}
-
 // True once the page has scrolled past `offset` pixels.
 export function useScrolled(offset = 8) {
   const [scrolled, setScrolled] = useState(false)

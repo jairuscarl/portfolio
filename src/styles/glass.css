@@ -2,7 +2,6 @@
    .glass       frosted content surface (cards, panels)
    .liquid      Liquid Glass for controls that float above content
                 (nav, tab bar, segmented controls, lightbox buttons).
-                Chromium also refracts the backdrop through #liquid-refraction.
    .glass-lite  look-alike without backdrop-filter, for big repeated grids
    Thickness: add .is-thin or .is-thick (regular by default).
    ──────────────────────────────────────────────────────────── */
@@ -39,8 +38,6 @@
   border-radius: inherit;
   backdrop-filter: blur(calc(var(--blur) * 0.5)) saturate(190%) brightness(1.05);
 }
-
-.has-refraction .liquid::before { filter: url(#liquid-refraction); }
 
 /* Specular rim: a 1px gradient border, bright where light hits the top-left edge. */
 .glass::after,

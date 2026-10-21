@@ -55,8 +55,8 @@ export default function Home() {
         <motion.div className="hero-visual" style={{ y: portraitY, scale: portraitScale }}>
           <motion.div
             className="portrait-frame liquid"
-            initial={{ opacity: 0, scale: 0.85, rotate: -4, filter: 'blur(16px)' }}
-            animate={{ opacity: 1, scale: 1, rotate: 0, filter: 'none' }}
+            initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ ...spring.bouncy, delay: 0.35 }}
             {...tilt}
           >

@@ -5,14 +5,13 @@ export const spring = {
   bouncy: { type: 'spring', visualDuration: 0.45, bounce: 0.3 }, // sliding pills, lightbox
 }
 
-// Content comes into focus: rises, fades in, and sharpens from a blur.
-// The blur animates to `none`, not blur(0px): any leftover filter would stop glass inside from blurring the backdrop.
+// Content rises and fades in. No blur here: filtering a moving element forces a repaint every frame
+// and makes any glass inside it re-blur its backdrop, which is what made the site laggy.
 export const focusIn = {
-  hidden: { opacity: 0, y: 28, filter: 'blur(10px)' },
+  hidden: { opacity: 0, y: 28 },
   shown: (delay = 0) => ({
     opacity: 1,
     y: 0,
-    filter: 'none',
     transition: { ...spring.smooth, delay },
   }),
 }
