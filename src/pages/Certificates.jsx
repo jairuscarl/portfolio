@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import { FaExpand } from 'react-icons/fa6'
 import { certificateFilters, certificates } from '../data'
+import { mediaId, spring } from '../motion'
 import Reveal from '../components/Reveal'
 import SectionHead from '../components/SectionHead'
 
@@ -19,37 +21,50 @@ export default function Certificates({ onOpenImage }) {
         description="Proof that I don't just Google things. I finish the courses too. Click any card to see it up close."
       />
 
-      <div className="filters" role="group" aria-label="Filter certificates">
+      <Reveal className="segmented liquid" role="group" aria-label="Filter certificates">
         {certificateFilters.map(({ id, label }) => (
           <button
             key={id}
-            className={`filter-btn ${filter === id ? 'is-active' : ''}`}
+            className={`segment ${filter === id ? 'is-active' : ''}`}
             aria-pressed={filter === id}
             onClick={() => setFilter(id)}
           >
-            {label} <span className="filter-count">{countFor(id)}</span>
+            {filter === id && <motion.span className="segment-pill" layoutId="segment-pill" transition={spring.bouncy} />}
+            <span>{label}</span>
+            <span className="segment-count">{countFor(id)}</span>
           </button>
         ))}
-      </div>
+      </Reveal>
 
-      <ul className="cards-grid">
-        {shown.map((cert, i) => (
-          <Reveal as="li" className="card" key={cert.title} delay={(i % 3) * 100}>
-            <button
-              className="card-media card-media-btn"
-              onClick={() => onOpenImage(shown.map((c) => ({ image: c.image, caption: c.title })), i)}
-              aria-label={`View ${cert.title} certificate`}
+      {/* Cards that stay glide to their new spot; the rest shrink away or grow in. */}
+      <ul className="cards-grid" style={{ position: 'relative' }}>
+        <AnimatePresence mode="popLayout" initial={false}>
+          {shown.map((cert, i) => (
+            <Reveal
+              as="li"
+              key={cert.title}
+              delay={(i % 3) * 100}
+              layout
+              exit={{ opacity: 0, scale: 0.8, filter: 'blur(8px)', transition: { duration: 0.25 } }}
             >
-              <img src={cert.image} alt="" loading="lazy" />
-              <span className="card-media-hint"><FaExpand aria-hidden="true" /> View</span>
-            </button>
-            <div className="card-body">
-              <span className="card-eyebrow">{cert.issuer}</span>
-              <h3 className="card-title">{cert.title}</h3>
-              <p className="card-text">{cert.description}</p>
-            </div>
-          </Reveal>
-        ))}
+              <article className="card glass">
+                <button
+                  className="card-media card-media-btn"
+                  onClick={() => onOpenImage(shown.map((c) => ({ image: c.image, caption: c.title })), i)}
+                  aria-label={`View ${cert.title} certificate`}
+                >
+                  <motion.img layoutId={mediaId(cert.image)} src={cert.image} alt="" loading="lazy" />
+                  <span className="card-media-hint liquid"><FaExpand aria-hidden="true" /> View</span>
+                </button>
+                <div className="card-body">
+                  <span className="card-eyebrow">{cert.issuer}</span>
+                  <h3 className="card-title">{cert.title}</h3>
+                  <p className="card-text">{cert.description}</p>
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </AnimatePresence>
       </ul>
     </section>
   )

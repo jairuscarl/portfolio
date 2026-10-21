@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useMotionValue, useSpring, useTransform } from 'motion/react'
+import { spring } from './motion'
 
 // Dark/light theme stored on <html data-theme> and remembered in localStorage.
 export function useTheme() {
@@ -6,6 +8,7 @@ export function useTheme() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#000000' : '#f5f5f7')
     try {
       localStorage.setItem('theme', theme)
     } catch {
@@ -17,24 +20,54 @@ export function useTheme() {
   return [theme, toggle]
 }
 
-// Returns a ref and whether that element has scrolled into view (fires once).
-export function useInView(options = { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }) {
-  const ref = useRef(null)
-  const [inView, setInView] = useState(false)
+// Turns on backdrop refraction for .liquid controls. Only Chromium can filter a backdrop through SVG;
+// elsewhere the declaration would blank the glass, so it stays off.
+export function useRefraction() {
+  useEffect(() => {
+    const isChromium = navigator.userAgentData?.brands?.some((b) => b.brand === 'Chromium')
+    document.documentElement.classList.toggle('has-refraction', Boolean(isChromium))
+  }, [])
+}
+
+// True once the page has scrolled past `offset` pixels.
+export function useScrolled(offset = 8) {
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setInView(true)
-        observer.disconnect()
-      }
-    }, options)
-    observer.observe(el)
-    return () => observer.disconnect()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    const onScroll = () => setScrolled(window.scrollY > offset)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [offset])
 
-  return [ref, inView]
+  return scrolled
+}
+
+// Springy 3D tilt toward the pointer, plus --mx/--my for the glass highlight to follow it.
+// Spread the result onto a motion element.
+export function useTilt(max = 6) {
+  const px = useMotionValue(0.5)
+  const py = useMotionValue(0.5)
+  const rotateX = useSpring(useTransform(py, [0, 1], [max, -max]), spring.smooth)
+  const rotateY = useSpring(useTransform(px, [0, 1], [-max, max]), spring.smooth)
+
+  const onPointerMove = (e) => {
+    if (e.pointerType !== 'mouse') return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width
+    const y = (e.clientY - rect.top) / rect.height
+    px.set(x)
+    py.set(y)
+    e.currentTarget.style.setProperty('--mx', `${x * 100}%`)
+    e.currentTarget.style.setProperty('--my', `${y * 100}%`)
+  }
+
+  const onPointerLeave = (e) => {
+    px.set(0.5)
+    py.set(0.5)
+    e.currentTarget.style.removeProperty('--mx')
+    e.currentTarget.style.removeProperty('--my')
+  }
+
+  return { style: { rotateX, rotateY, transformPerspective: 1000 }, onPointerMove, onPointerLeave }
 }

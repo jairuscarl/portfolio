@@ -1,64 +1,66 @@
-import { useEffect, useState } from 'react'
+import { motion } from 'motion/react'
 import { Link, NavLink } from 'react-router'
-import { FaBars, FaMoon, FaSun, FaXmark } from 'react-icons/fa6'
+import { FaAward, FaEnvelope, FaHouse, FaLayerGroup, FaUser } from 'react-icons/fa6'
 import { navLinks } from '../data'
+import { useScrolled } from '../hooks'
+import { spring } from '../motion'
+import ThemeSwitch from './ThemeSwitch'
 
+const tabIcons = { '/': FaHouse, '/about': FaUser, '/projects': FaLayerGroup, '/certificates': FaAward, '/contact': FaEnvelope }
+
+// Floating Liquid Glass capsule on desktop; on phones the links move to an iOS-style tab bar at the bottom.
 export default function Navbar({ theme, onToggleTheme }) {
-  const [open, setOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  const scrolled = useScrolled()
 
   return (
-    <header className={`topbar ${scrolled || open ? 'is-scrolled' : ''}`}>
-      <nav className="nav shell" aria-label="Primary">
-        <Link className="brand" to="/" onClick={() => setOpen(false)}>
-          <span className="brand-dot" />
-          <span>
-            <span className="accent">&lt;</span> JAI <span className="accent">/&gt;</span>
-          </span>
-        </Link>
+    <>
+      <motion.header className="nav-wrap" layoutRoot>
+        <motion.nav
+          className={`nav liquid ${scrolled ? 'is-scrolled' : ''}`}
+          aria-label="Primary"
+          initial={{ opacity: 0, y: -24, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ ...spring.bouncy, delay: 0.1 }}
+        >
+          <Link className="brand mono" to="/">
+            <span className="accent">&lt;</span>JAI<span className="accent">/&gt;</span>
+          </Link>
 
-        <div className="nav-right">
-          <ul className={`nav-links ${open ? 'is-open' : ''}`} id="nav-menu">
+          <ul className="nav-links">
             {navLinks.map(({ to, label }) => (
               <li key={to}>
-                <NavLink
-                  className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
-                  to={to}
-                  end={to === '/'}
-                  onClick={() => setOpen(false)}
-                >
-                  {label}
+                <NavLink className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`} to={to} end={to === '/'}>
+                  {({ isActive }) => (
+                    <>
+                      {isActive && <motion.span className="nav-pill" layoutId="nav-pill" transition={spring.bouncy} />}
+                      <span>{label}</span>
+                    </>
+                  )}
                 </NavLink>
               </li>
             ))}
           </ul>
 
-          <button
-            className="icon-btn theme-toggle"
-            onClick={onToggleTheme}
-            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-          >
-            {theme === 'dark' ? <FaMoon /> : <FaSun />}
-          </button>
+          <ThemeSwitch theme={theme} onToggle={onToggleTheme} />
+        </motion.nav>
+      </motion.header>
 
-          <button
-            className="icon-btn nav-toggle"
-            onClick={() => setOpen((o) => !o)}
-            aria-label="Toggle navigation"
-            aria-expanded={open}
-            aria-controls="nav-menu"
-          >
-            {open ? <FaXmark /> : <FaBars />}
-          </button>
-        </div>
-      </nav>
-    </header>
+      <motion.nav className="tabbar liquid is-thick" aria-label="Primary" layoutRoot>
+        {navLinks.map(({ to, label }) => {
+          const Icon = tabIcons[to]
+          return (
+            <NavLink key={to} className={({ isActive }) => `tab ${isActive ? 'is-active' : ''}`} to={to} end={to === '/'}>
+              {({ isActive }) => (
+                <>
+                  {isActive && <motion.span className="nav-pill" layoutId="tab-pill" transition={spring.bouncy} />}
+                  <Icon aria-hidden="true" />
+                  <span>{label === 'Certificates' ? 'Certs' : label}</span>
+                </>
+              )}
+            </NavLink>
+          )
+        })}
+      </motion.nav>
+    </>
   )
 }

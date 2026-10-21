@@ -1,0 +1,93 @@
+/* ─── Design tokens ──────────────────────────────────────────
+   Apple-style system: SF / Inter type, system colors, glass
+   materials (thin · regular · thick) and spring easings.
+   ──────────────────────────────────────────────────────────── */
+:root {
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Colors (dark) */
+  --bg: #000;
+  --fg: rgba(255, 255, 255, 0.96);
+  --fg-secondary: rgba(235, 235, 245, 0.62);
+  --fg-tertiary: rgba(235, 235, 245, 0.34);
+  --separator: rgba(255, 255, 255, 0.1);
+  --fill: rgba(120, 120, 128, 0.24);
+  --fill-hover: rgba(120, 120, 128, 0.34);
+  --accent: #ff453a;
+  --accent-soft: rgba(255, 69, 58, 0.16);
+  --accent-glow: rgba(255, 69, 58, 0.4);
+  --accent-gradient: linear-gradient(100deg, #ff453a 0%, #ff6b3d 45%, #ff375f 100%);
+  --blob-1: #ff375f;
+  --blob-2: #ff9f0a;
+  --blob-3: #5e5ce6;
+  --blob-4: #0a84ff;
+  --blob-opacity: 0.55;
+
+  /* Glass materials (dark) */
+  --glass-thin: rgba(40, 40, 46, 0.32);
+  --glass-regular: rgba(30, 30, 36, 0.48);
+  --glass-thick: rgba(22, 22, 28, 0.66);
+  --glass-solid: #1c1c1e;
+  --pill-active: rgba(255, 255, 255, 0.16);
+  --glass-rim: rgba(255, 255, 255, 0.34);
+  --glass-rim-soft: rgba(255, 255, 255, 0.05);
+  --glass-shine: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.45), 0 1px 3px rgba(0, 0, 0, 0.3);
+
+  /* Geometry */
+  --radius-xs: 10px;
+  --radius-sm: 14px;
+  --radius: 22px;
+  --radius-lg: 30px;
+  --pill: 999px;
+  --nav-top: 14px;
+  --nav-h: 56px;
+  --tabbar-h: 0px;
+
+  /* Motion: spring curves sampled from damped-oscillator physics */
+  --spring: linear(0, 0.056, 0.187, 0.348, 0.51, 0.657, 0.778, 0.873, 0.942, 0.989, 1.017, 1.033, 1.038, 1.037, 1.033, 1.027, 1.021, 1.015, 1.01, 1.006, 1.003, 1.001, 1, 0.999, 1);
+  --spring-bouncy: linear(0, 0.054, 0.185, 0.357, 0.538, 0.708, 0.853, 0.967, 1.047, 1.097, 1.122, 1.126, 1.116, 1.098, 1.075, 1.053, 1.032, 1.015, 1.001, 0.992, 0.987, 0.984, 0.984, 0.986, 0.988, 0.991, 0.994, 0.997, 0.999, 1, 1.001, 1.002, 1.001, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 0.2s var(--ease-out);
+  --t: 0.45s var(--spring);
+  --t-bouncy: 0.6s var(--spring-bouncy);
+
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg: #f5f5f7;
+  --fg: rgba(0, 0, 0, 0.88);
+  --fg-secondary: rgba(60, 60, 67, 0.72);
+  --fg-tertiary: rgba(60, 60, 67, 0.4);
+  --separator: rgba(60, 60, 67, 0.14);
+  --fill: rgba(120, 120, 128, 0.12);
+  --fill-hover: rgba(120, 120, 128, 0.2);
+  --accent: #e5352b;
+  --accent-soft: rgba(255, 59, 48, 0.12);
+  --accent-glow: rgba(255, 59, 48, 0.32);
+  --accent-gradient: linear-gradient(100deg, #e5352b 0%, #f2602a 45%, #e8264f 100%);
+  --blob-opacity: 0.42;
+
+  --glass-thin: rgba(255, 255, 255, 0.34);
+  --glass-regular: rgba(255, 255, 255, 0.52);
+  --glass-thick: rgba(255, 255, 255, 0.72);
+  --glass-solid: #fff;
+  --pill-active: rgba(255, 255, 255, 0.9);
+  --glass-rim: rgba(255, 255, 255, 0.95);
+  --glass-rim-soft: rgba(255, 255, 255, 0.3);
+  --glass-shine: rgba(255, 255, 255, 0.55);
+  --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+
+  color-scheme: light;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --nav-top: 10px;
+    --nav-h: 50px;
+    --tabbar-h: 84px;
+  }
+}

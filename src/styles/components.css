@@ -1,0 +1,421 @@
+/* ─── Buttons ────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 24px;
+  border-radius: var(--pill);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  cursor: pointer;
+  transition: transform var(--t), filter var(--t-fast), box-shadow var(--t-fast);
+}
+
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: scale(0.96); transition-duration: 0.12s; }
+
+.btn-primary {
+  color: #fff;
+  background: var(--accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 6px 20px var(--accent-glow);
+}
+
+.btn-primary:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 10px 30px var(--accent-glow); }
+.btn-block { width: 100%; }
+.btn.is-disabled { color: var(--fg-tertiary); cursor: default; filter: none; transform: none; }
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 16px;
+  color: var(--fg);
+  cursor: pointer;
+  transition: transform var(--t);
+}
+
+.icon-btn:hover { transform: scale(1.06); }
+.icon-btn:active { transform: scale(0.9); transition-duration: 0.12s; }
+
+/* ─── Navigation: floating Liquid Glass capsule ──────────── */
+.nav-wrap {
+  position: fixed;
+  top: var(--nav-top);
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: var(--nav-h);
+  padding: 0 8px 0 20px;
+  border-radius: var(--pill);
+  pointer-events: auto;
+  transition: height var(--t-bouncy), padding var(--t-bouncy);
+}
+
+/* Like the iOS 26 tab bar, the capsule tightens up once content scrolls beneath it. */
+.nav.is-scrolled { height: calc(var(--nav-h) - 8px); padding-left: 16px; }
+
+.brand {
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.nav-links { display: flex; gap: 2px; }
+
+.nav-link {
+  position: relative;
+  display: block;
+  padding: 8px 16px;
+  border-radius: var(--pill);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg-secondary);
+  transition: color var(--t-fast);
+}
+
+.nav-link:hover, .nav-link.is-active { color: var(--fg); }
+.nav-link > span:not(.nav-pill) { position: relative; z-index: 1; }
+
+/* The pill that slides between links; Motion animates it with layoutId. */
+.nav-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--pill-active);
+  box-shadow: inset 0 1px 0 var(--glass-rim), 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* ─── Mobile tab bar (iOS style) ─────────────────────────── */
+.tabbar { display: none; }
+
+@media (max-width: 760px) {
+  .nav { width: calc(100% - 24px); justify-content: space-between; padding: 0 6px 0 18px; }
+  .nav .nav-links { display: none; }
+
+  .tabbar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 100;
+    display: flex;
+    padding: 6px;
+    border-radius: var(--pill);
+  }
+
+  .tab {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 2px 6px;
+    border-radius: var(--pill);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--fg-secondary);
+    transition: color var(--t-fast), transform var(--t);
+  }
+
+  .tab:active { transform: scale(0.92); }
+  .tab.is-active { color: var(--accent); }
+  .tab svg { position: relative; z-index: 1; font-size: 19px; }
+  .tab > span:not(.nav-pill) { position: relative; z-index: 1; }
+}
+
+/* ─── Theme switch (iOS toggle) ──────────────────────────── */
+.switch {
+  display: flex;
+  align-items: center;
+  width: 56px;
+  height: 32px;
+  padding: 3px;
+  border-radius: var(--pill);
+  background: var(--fill);
+  cursor: pointer;
+  transition: background-color 0.35s var(--ease-out);
+}
+
+.switch[aria-checked='true'] { justify-content: flex-end; background: #5e5ce6; }
+
+.switch-knob {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: #ff9f0a;
+  font-size: 13px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25), 0 0 0 0.5px rgba(0, 0, 0, 0.04);
+}
+
+.switch[aria-checked='true'] .switch-knob { color: #5e5ce6; }
+
+/* ─── Segmented control ──────────────────────────────────── */
+.segmented {
+  display: inline-flex;
+  gap: 2px;
+  padding: 4px;
+  margin-bottom: 32px;
+  border-radius: var(--pill);
+}
+
+.segment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--pill);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg-secondary);
+  cursor: pointer;
+  transition: color var(--t-fast), transform var(--t);
+}
+
+.segment:active { transform: scale(0.95); }
+.segment.is-active { color: var(--fg); }
+.segment > span:not(.segment-pill) { position: relative; z-index: 1; }
+
+.segment-count {
+  min-width: 22px;
+  padding: 0 7px;
+  border-radius: var(--pill);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  background: var(--fill);
+}
+
+.segment-pill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--pill-active);
+  box-shadow: inset 0 1px 0 var(--glass-rim), 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* ─── Section headings ───────────────────────────────────── */
+.section-head { margin-bottom: 56px; }
+
+.section-index {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.section-title { font-size: clamp(40px, 6vw, 72px); margin-bottom: 18px; }
+
+.section-desc {
+  max-width: 58ch;
+  font-size: clamp(17px, 1.6vw, 21px);
+  line-height: 1.42;
+  color: var(--fg-secondary);
+}
+
+.sub-title { font-size: clamp(28px, 3.4vw, 40px); margin: 112px 0 12px; }
+.sub-desc { max-width: 60ch; margin-bottom: 28px; font-size: 17px; color: var(--fg-secondary); }
+
+/* ─── Cards ──────────────────────────────────────────────── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.card-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--fill);
+}
+
+.card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.card:hover .card-media img { transform: scale(1.05); }
+
+.card-media-btn { cursor: zoom-in; }
+
+.card-media-hint {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: var(--pill);
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(8px) scale(0.9);
+  transition: opacity var(--t-fast), transform var(--t-bouncy);
+}
+
+.card-media-hint.liquid { --tint: rgba(0, 0, 0, 0.28); }
+
+.card-media-btn:hover .card-media-hint,
+.card-media-btn:focus-visible .card-media-hint { opacity: 1; transform: none; }
+
+.card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 22px 24px 24px;
+}
+
+.card-eyebrow {
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.card-title { margin-bottom: 8px; font-size: 21px; letter-spacing: -0.025em; }
+
+.card-text {
+  flex: 1;
+  margin-bottom: 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fg-secondary);
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+
+.tags li {
+  padding: 4px 11px;
+  border-radius: var(--pill);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--fg-secondary);
+  background: var(--fill);
+}
+
+/* ─── Footer ─────────────────────────────────────────────── */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 24px 0 calc(40px + var(--tabbar-h));
+  border-top: 1px solid var(--separator);
+  font-size: 13px;
+  color: var(--fg-tertiary);
+}
+
+.footer a { color: var(--fg-secondary); transition: color var(--t-fast); }
+.footer a:hover { color: var(--accent); }
+
+/* ─── Lightbox ───────────────────────────────────────────── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(40px) saturate(160%);
+}
+
+.lightbox-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 88px 88px 48px;
+}
+
+.lightbox-img {
+  max-width: min(1100px, 100%);
+  max-height: calc(100dvh - 140px);
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.lightbox-img:active { cursor: grabbing; }
+
+.lightbox-bar {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: calc(100% - 32px);
+  padding: 6px 6px 6px 20px;
+  border-radius: var(--pill);
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  --tint: rgba(30, 30, 36, 0.4);
+}
+
+.lightbox-bar > span:first-child { overflow: hidden; text-overflow: ellipsis; }
+.lightbox-count { font-weight: 400; font-variant-numeric: tabular-nums; color: rgba(255, 255, 255, 0.6); }
+.lightbox-bar .icon-btn { width: 36px; height: 36px; color: #fff; background: rgba(255, 255, 255, 0.14); }
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  margin-top: -22px;
+  color: #fff;
+  --tint: rgba(30, 30, 36, 0.4);
+}
+
+.lightbox-nav.prev { left: 20px; }
+.lightbox-nav.next { right: 20px; }
+
+@media (max-width: 760px) {
+  .lightbox-stage { padding: 76px 12px 96px; }
+  .lightbox-nav { top: auto; bottom: 24px; margin: 0; }
+  .lightbox-nav.prev { left: calc(50% - 56px); }
+  .lightbox-nav.next { right: calc(50% - 56px); }
+}

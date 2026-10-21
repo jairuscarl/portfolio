@@ -1,0 +1,80 @@
+/* ─── Glass materials ─────────────────────────────────────────
+   .glass       frosted content surface (cards, panels)
+   .liquid      Liquid Glass for controls that float above content
+                (nav, tab bar, segmented controls, lightbox buttons).
+                Chromium also refracts the backdrop through #liquid-refraction.
+   .glass-lite  look-alike without backdrop-filter, for big repeated grids
+   Thickness: add .is-thin or .is-thick (regular by default).
+   ──────────────────────────────────────────────────────────── */
+.glass,
+.liquid,
+.glass-lite {
+  --tint: var(--glass-regular);
+  --blur: 24px;
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(420px circle at var(--mx, 30%) var(--my, -30%), var(--glass-shine), transparent 60%),
+    var(--tint);
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim-soft),
+    var(--glass-shadow);
+  transition: background-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.glass.is-thin, .liquid.is-thin { --tint: var(--glass-thin); --blur: 16px; }
+.glass.is-thick, .liquid.is-thick { --tint: var(--glass-thick); --blur: 40px; }
+.glass-lite { --tint: var(--glass-thin); }
+
+.glass {
+  backdrop-filter: blur(var(--blur)) saturate(180%);
+}
+
+/* Liquid Glass keeps the backdrop on its own layer so Chromium can bend it. */
+.liquid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  backdrop-filter: blur(calc(var(--blur) * 0.5)) saturate(190%) brightness(1.05);
+}
+
+.has-refraction .liquid::before { filter: url(#liquid-refraction); }
+
+/* Specular rim: a 1px gradient border, bright where light hits the top-left edge. */
+.glass::after,
+.liquid::after,
+.glass-lite::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: linear-gradient(
+    150deg,
+    var(--glass-rim) 0%,
+    var(--glass-rim-soft) 28%,
+    transparent 50%,
+    var(--glass-rim-soft) 76%,
+    var(--glass-rim) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* Liquid controls also get an inner glow, like light caught inside the lens. */
+.liquid {
+  box-shadow:
+    inset 0 1px 1px var(--glass-rim-soft),
+    inset 0 -8px 16px -12px var(--glass-rim),
+    var(--glass-shadow);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass, .liquid, .glass-lite { background: var(--glass-solid); }
+  .glass, .liquid::before { backdrop-filter: none; }
+}

@@ -129,11 +129,12 @@ export const highlights = [
   { value: projects.length, label: 'Projects' },
 ]
 
+// `color` paints the app-style icon tile on the Contact page (any CSS background works).
 export const socials = [
-  { label: 'GitHub', icon: FaGithub, url: 'https://github.com/jairuscarl' },
-  { label: 'LinkedIn', icon: FaLinkedinIn, url: 'https://linkedin.com/in/jairuscarl' },
-  { label: 'YouTube', icon: FaYoutube, url: 'https://youtube.com/@zuqwise' },
-  { label: 'Discord', icon: FaDiscord, url: 'https://discord.com/channels/@me/701970997892350033' },
-  { label: 'Facebook', icon: FaFacebookF, url: 'https://www.facebook.com/jrscarl' },
-  { label: 'Instagram', icon: FaInstagram, url: 'https://www.instagram.com/jrscrl/' },
+  { label: 'GitHub', icon: FaGithub, url: 'https://github.com/jairuscarl', color: '#24292f' },
+  { label: 'LinkedIn', icon: FaLinkedinIn, url: 'https://linkedin.com/in/jairuscarl', color: '#0a66c2' },
+  { label: 'YouTube', icon: FaYoutube, url: 'https://youtube.com/@zuqwise', color: '#ff0033' },
+  { label: 'Discord', icon: FaDiscord, url: 'https://discord.com/channels/@me/701970997892350033', color: '#5865f2' },
+  { label: 'Facebook', icon: FaFacebookF, url: 'https://www.facebook.com/jrscarl', color: '#0866ff' },
+  { label: 'Instagram', icon: FaInstagram, url: 'https://www.instagram.com/jrscrl/', color: 'linear-gradient(45deg, #feda75, #fa7e1e 25%, #d62976 50%, #962fbf 75%, #4f5bd5)' },
 ]
