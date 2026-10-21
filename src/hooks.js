@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMotionValue, useSpring, useTransform } from 'motion/react'
 import { spring } from './motion'
 
@@ -42,11 +42,17 @@ export function useTilt(max = 6) {
   const rotateX = useSpring(useTransform(py, [0, 1], [max, -max]), spring.smooth)
   const rotateY = useSpring(useTransform(px, [0, 1], [-max, max]), spring.smooth)
 
+  const rect = useRef(null)
+
+  const onPointerEnter = (e) => {
+    rect.current = e.currentTarget.getBoundingClientRect()
+  }
+
   const onPointerMove = (e) => {
-    if (e.pointerType !== 'mouse') return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = (e.clientX - rect.left) / rect.width
-    const y = (e.clientY - rect.top) / rect.height
+    if (e.pointerType !== 'mouse' || !rect.current) return
+    const { left, top, width, height } = rect.current
+    const x = (e.clientX - left) / width
+    const y = (e.clientY - top) / height
     px.set(x)
     py.set(y)
     e.currentTarget.style.setProperty('--mx', `${x * 100}%`)
@@ -54,11 +60,12 @@ export function useTilt(max = 6) {
   }
 
   const onPointerLeave = (e) => {
+    rect.current = null
     px.set(0.5)
     py.set(0.5)
     e.currentTarget.style.removeProperty('--mx')
     e.currentTarget.style.removeProperty('--my')
   }
 
-  return { style: { rotateX, rotateY, transformPerspective: 1000 }, onPointerMove, onPointerLeave }
+  return { style: { rotateX, rotateY, transformPerspective: 1000 }, onPointerEnter, onPointerMove, onPointerLeave }
 }

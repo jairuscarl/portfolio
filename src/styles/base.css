@@ -75,6 +75,10 @@ h1, h2, h3 {
 .blob-3 { --c: var(--blob-3); bottom: -35vmax; left: 0; animation: drift-3 44s ease-in-out infinite alternate; }
 .blob-4 { --c: var(--blob-4); bottom: -20vmax; right: -10vmax; width: 50vmax; height: 50vmax; opacity: calc(var(--blob-opacity) * 0.7); animation: drift-1 50s ease-in-out infinite alternate-reverse; }
 
+/* Paused while scrolling (see Backdrop.jsx) and while the lightbox covers the page. */
+.backdrop.is-paused .blob,
+.lightbox-open .blob { animation-play-state: paused; }
+
 @keyframes drift-1 { to { transform: translate(18vmax, 14vmax) scale(1.15); } }
 @keyframes drift-2 { to { transform: translate(-22vmax, 10vmax) scale(0.9); } }
 @keyframes drift-3 { to { transform: translate(14vmax, -16vmax) scale(1.1); } }

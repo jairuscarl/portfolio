@@ -60,7 +60,7 @@ export default function Home() {
             transition={{ ...spring.bouncy, delay: 0.35 }}
             {...tilt}
           >
-            <img src={profile.photo} alt={profile.name} />
+            <img src={profile.photo} alt={profile.name} decoding="async" />
           </motion.div>
         </motion.div>
       </div>

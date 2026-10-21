@@ -38,9 +38,11 @@ export default function Lightbox({ items, index, onChange, onClose }) {
     }
     document.addEventListener('keydown', onKey)
     document.body.style.overflow = 'hidden'
+    document.documentElement.classList.add('lightbox-open')
     return () => {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = ''
+      document.documentElement.classList.remove('lightbox-open')
     }
   }, [index, items.length, hasMany, onChange, onClose])
 
@@ -64,6 +66,7 @@ export default function Lightbox({ items, index, onChange, onClose }) {
             className="lightbox-img"
             src={item.image}
             alt={item.caption}
+            decoding="async"
             layoutId={shared ? mediaId(item.image) : undefined}
             custom={dir}
             variants={slide}

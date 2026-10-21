@@ -10,7 +10,7 @@ function ProjectCard({ project }) {
   return (
     <motion.article className="card glass" {...tilt}>
       <div className="card-media">
-        <img src={project.image} alt={`${project.title} screenshot`} loading="lazy" />
+        <img src={project.image} alt={`${project.title} screenshot`} loading="lazy" decoding="async" />
       </div>
       <div className="card-body">
         <h3 className="card-title">{project.title}</h3>

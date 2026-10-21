@@ -26,7 +26,7 @@ export default function About({ onOpenImage }) {
         </Reveal>
 
         <Reveal className="info-card glass is-thick" delay={150}>
-          <img className="info-avatar" src={profile.photo} alt="" />
+          <img className="info-avatar" src={profile.photo} alt="" decoding="async" />
           <div className="info-name">{profile.name}</div>
           <div className="info-role">{profile.role}</div>
           <ul className="info-list">
@@ -59,7 +59,7 @@ export default function About({ onOpenImage }) {
         {gallery.map((item, i) => (
           <Reveal as="li" key={item.image} delay={(i % 4) * 70}>
             <button className="gallery-item" onClick={() => onOpenImage(gallery, i)}>
-              <motion.img layoutId={mediaId(item.image)} src={item.image} alt={item.caption} loading="lazy" />
+              <motion.img layoutId={mediaId(item.image)} src={item.image} alt={item.caption} loading="lazy" decoding="async" />
               <span className="gallery-caption glass">{item.caption}</span>
             </button>
           </Reveal>

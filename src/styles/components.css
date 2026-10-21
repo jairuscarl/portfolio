@@ -286,14 +286,15 @@
   font-weight: 600;
   color: #fff;
   opacity: 0;
+  visibility: hidden; /* skips the backdrop blur while it can't be seen */
   transform: translateY(8px) scale(0.9);
-  transition: opacity var(--t-fast), transform var(--t-bouncy);
+  transition: opacity var(--t-fast), transform var(--t-bouncy), visibility 0s linear 0.2s;
 }
 
 .card-media-hint.liquid { --tint: rgba(0, 0, 0, 0.28); }
 
 .card-media-btn:hover .card-media-hint,
-.card-media-btn:focus-visible .card-media-hint { opacity: 1; transform: none; }
+.card-media-btn:focus-visible .card-media-hint { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
 
 .card-body {
   flex: 1;

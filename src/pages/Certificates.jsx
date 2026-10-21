@@ -53,7 +53,7 @@ export default function Certificates({ onOpenImage }) {
                   onClick={() => onOpenImage(shown.map((c) => ({ image: c.image, caption: c.title })), i)}
                   aria-label={`View ${cert.title} certificate`}
                 >
-                  <motion.img layoutId={mediaId(cert.image)} src={cert.image} alt="" loading="lazy" />
+                  <motion.img layoutId={mediaId(cert.image)} src={cert.image} alt="" loading="lazy" decoding="async" />
                   <span className="card-media-hint liquid"><FaExpand aria-hidden="true" /> View</span>
                 </button>
                 <div className="card-body">
