@@ -130,10 +130,10 @@ export const highlights = [
 ]
 
 export const socials = [
-  { label: 'GitHub', icon: FaGithub, url: 'https://github.com/zuqwise' },
+  { label: 'GitHub', icon: FaGithub, url: 'https://github.com/jairuscarl' },
   { label: 'LinkedIn', icon: FaLinkedinIn, url: 'https://linkedin.com/in/jairuscarl' },
   { label: 'YouTube', icon: FaYoutube, url: 'https://youtube.com/@zuqwise' },
-  { label: 'Discord', icon: FaDiscord, url: 'https://discord.com/users/zuqwise' },
-  { label: 'Facebook', icon: FaFacebookF, url: 'https://facebook.com/zuqwise' },
-  { label: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/zuqwise' },
+  { label: 'Discord', icon: FaDiscord, url: 'https://discord.com/channels/@me/701970997892350033' },
+  { label: 'Facebook', icon: FaFacebookF, url: 'https://www.facebook.com/jrscarl' },
+  { label: 'Instagram', icon: FaInstagram, url: 'https://www.instagram.com/jrscrl/' },
 ]
