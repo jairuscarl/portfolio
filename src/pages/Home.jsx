@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 import { Link } from 'react-router'
 import { highlights, profile } from '../data'
-import { useTilt } from '../hooks'
+import { useMediaQuery, useTilt } from '../hooks'
 import { focusIn, spring, stagger } from '../motion'
 import CountUp from '../components/CountUp'
 
@@ -11,6 +11,9 @@ export default function Home() {
   const tilt = useTilt(8)
 
   // apple.com-style scroll choreography: the headline recedes and the portrait drifts as you scroll away.
+  // Desktop only: on tablets and phones the hero stacks into one tall column (same 900px breakpoint as
+  // pages.css), so the text would fade out while you're still reading it.
+  const scrollFx = !useMediaQuery('(max-width: 900px)')
   const { scrollYProgress } = useScroll({ target: hero, offset: ['start start', 'end start'] })
   const nameScale = useTransform(scrollYProgress, [0, 1], [1, 0.86])
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
@@ -25,13 +28,13 @@ export default function Home() {
           variants={stagger(0.09, 0.15)}
           initial="hidden"
           animate="shown"
-          style={{ opacity: contentOpacity }}
+          style={{ opacity: scrollFx ? contentOpacity : 1 }}
         >
           <motion.div className="kicker liquid is-thin" variants={focusIn}>
             <span className="kicker-dot" aria-hidden="true" />
             {profile.role}
           </motion.div>
-          <motion.h1 className="hero-name" variants={focusIn} style={{ scale: nameScale }}>
+          <motion.h1 className="hero-name" variants={focusIn} style={{ scale: scrollFx ? nameScale : 1 }}>
             {profile.firstName}
             <br />
             <span className="accent-text">{profile.lastName}</span>
@@ -52,7 +55,7 @@ export default function Home() {
           </motion.dl>
         </motion.div>
 
-        <motion.div className="hero-visual" style={{ y: portraitY, scale: portraitScale }}>
+        <motion.div className="hero-visual" style={scrollFx ? { y: portraitY, scale: portraitScale } : { y: 0, scale: 1 }}>
           <motion.div
             className="portrait-frame liquid"
             initial={{ opacity: 0, scale: 0.85, rotate: -4 }}
