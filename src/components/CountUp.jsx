@@ -10,10 +10,13 @@ export default function CountUp({ value }) {
 
   useEffect(() => {
     if (!isNumber || !inView || reduced) return
+    // Hold on to the element: React clears ref.current before this effect's cleanup runs, and
+    // controls.stop() fires one last onUpdate, so leaving Home mid-count used to crash the whole app.
+    const el = ref.current
     const controls = animate(0, value, {
       duration: 1.4,
       ease: [0.16, 1, 0.3, 1],
-      onUpdate: (v) => { ref.current.textContent = Math.round(v) },
+      onUpdate: (v) => { el.textContent = Math.round(v) },
     })
     return () => controls.stop()
   }, [isNumber, inView, reduced, value])
